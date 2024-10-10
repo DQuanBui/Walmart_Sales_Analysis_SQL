@@ -129,7 +129,7 @@ UPDATE sales
 SET month_name = MONTHNAME(date);
 ```
 
-## Business Questions
+## Business Questions to solve
 ### Generic Question
 
 1. How many unique cities does the data have?
