@@ -1,3 +1,6 @@
+-- SQL Script for Walmart Sales Analysis Project
+-- Author: Dang Quan Bui
+
 USE walmartsales;
 
 -- Create the database 
@@ -5,7 +8,7 @@ CREATE DATABASE IF NOT EXISTS walmartsales;
 
 -- Create table
 CREATE TABLE IF NOT EXISTS sales(
-	invoice_id VARCHAR(30) NOT NULL PRIMARY KEY,
+    invoice_id VARCHAR(30) NOT NULL PRIMARY KEY,
     branch VARCHAR(5) NOT NULL,
     city VARCHAR (30) NOT NULL,
     customer_type VARCHAR(30) NOT NULL,
@@ -13,7 +16,7 @@ CREATE TABLE IF NOT EXISTS sales(
     product_line VARCHAR(100) NOT NULL,
     unit_price DECIMAL(10, 2) NOT NULL,
     quantity INT NOT NULL,
-	VAT FLOAT(6, 4) NOT NULL,
+    VAT FLOAT(6, 4) NOT NULL,
     total DECIMAL(12, 4) NOT NULL,
     date DATETIME NOT NULL,
     time TIME NOT NULL,
@@ -35,27 +38,27 @@ FROM
 SELECT
 	time,
     (CASE
-		WHEN `time` BETWEEN "00:00:00" AND "12:00:00" THEN "Morning"
+	WHEN `time` BETWEEN "00:00:00" AND "12:00:00" THEN "Morning"
         WHEN `time` BETWEEN "12:01:00" AND "16:00:00" THEN "Afternoon"
         ELSE "Evening"
-	END) AS time_of_day
+     END) AS time_of_day
 FROM
 	sales;
     
 ALTER TABLE sales ADD COLUMN time_of_day VARCHAR(20);
 
 UPDATE sales
-SET time_of_day = (CASE
-		WHEN `time` BETWEEN "00:00:00" AND "12:00:00" THEN "Morning"
+SET time_of_day = 
+	(CASE
+	WHEN `time` BETWEEN "00:00:00" AND "12:00:00" THEN "Morning"
         WHEN `time` BETWEEN "12:01:00" AND "16:00:00" THEN "Afternoon"
         ELSE "Evening"
-	END
-);
+	END);
 
 -- We wil add the day_name column to the table
 SELECT
 	date,
-    DAYNAME(date)
+        DAYNAME(date)
 FROM 
 	sales;
     
@@ -66,7 +69,7 @@ SET day_name = DAYNAME(date);
 
 -- We will add the month_name column to the
 SELECT
-	date,
+    date,
     MONTHNAME(date)
 FROM
 	sales;
@@ -135,7 +138,7 @@ ORDER BY
 
 -- Look at the month had the largest COGS
 SELECT
-	month_name AS month,
+    month_name AS month,
     SUM(cogs) AS cogs
 FROM
 	sales
@@ -146,7 +149,7 @@ ORDER BY
 
 -- Look at the product line had the largest revenue
 SELECT
-	product_line,
+    product_line,
     SUM(total) AS total_revenue
 FROM
 	sales
@@ -157,7 +160,7 @@ ORDER BY
 
 -- Look at the city had the largest revenue
 SELECT
-	city,
+    city,
     branch,
     SUM(total) AS total_revenue
 FROM
@@ -177,9 +180,7 @@ FROM
 GROUP BY
 	product_line
 ORDER BY
-	avg_tax DESC;SELECT 
-	AVG(quantity) AS avg_qnty
-FROM sales;
+	avg_tax DESC;
 
 -- Look at the branch sold more products than average product sold
 SELECT
@@ -194,20 +195,20 @@ HAVING
 
 -- Look at the most common product line by gender
 SELECT
-	gender,
+    gender,
     product_line,
     COUNT(gender) AS total_gender
 FROM
 	sales
 GROUP BY
-	gender,
+    gender,
     product_Line
 ORDER BY
-	total_gender DESC
+    total_gender DESC
     
 -- Look at the average rating of each product line
 SELECT
-	ROUND(AVG(rating), 2) as avg_rating,
+    ROUND(AVG(rating), 2) as avg_rating,
     product_line
 FROM 
 	sales
@@ -345,7 +346,7 @@ ORDER BY
 	
 -- Look at the time of the day customers give most ratings
 SELECT
-	time_of_day,
+    time_of_day,
     AVG(rating) AS average_rating
 FROM
 	sales
@@ -356,7 +357,7 @@ ORDER BY
     
 -- Look at the time of the day the customers give most ratings per branch
 SELECT
-	branch,
+    branch,
     time_of_day,
     AVG(rating) AS average_rating
 FROM
