@@ -172,3 +172,6 @@ SET month_name = MONTHNAME(date);
 
 ## Business Solutions Queries
 To check over the business solutions queries, check the [WalmartSalesAnalysis_SQLqueries.sql](https://github.com/dbui10/Walmart_Sales_Analysis/blob/main/Walmart_Sales_Analysis.sql) file
+
+## Contact
+For any inquiries or questions regarding the project, please contact me at dbui10@fordham.edu
